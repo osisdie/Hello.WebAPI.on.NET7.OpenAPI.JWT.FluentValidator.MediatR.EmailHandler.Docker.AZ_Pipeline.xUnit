@@ -1,0 +1,15 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "UnitTest.CoreFX": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        //"ASPNETCORE_ENVIRONMENT": "Debug",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "COREFX_API_NAME": "hello-mediatr-api-dev",
+        "COREFX_DEPLOY_NAME": "hello-mediatr-api"
+      }
+    }
+  }
+}
