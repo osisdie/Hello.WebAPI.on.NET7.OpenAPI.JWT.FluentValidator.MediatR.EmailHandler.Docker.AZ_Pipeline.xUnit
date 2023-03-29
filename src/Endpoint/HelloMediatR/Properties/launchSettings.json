@@ -9,12 +9,12 @@
     }
   },
   "profiles": {
-    "Hello.MediatR.Endpoint": {
+    "http:5000": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "health",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://+:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Debug",
         //"ASPNETCORE_ENVIRONMENT": "Development",
@@ -23,6 +23,18 @@
         "COREFX_DEPLOY_NAME": "hello-mediatr-api"
         //"COREFX_SMTP_PWD": "***"
       }
+    },
+    "WSL": {
+      "commandName": "WSL",
+      "launchBrowser": true,
+      "launchUrl": "https://+:5001",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "https://+:5001;http://+:5000",
+        "ASPNETCORE_ENVIRONMENT": "Debug",
+        "COREFX_API_NAME": "hello-mediatr-api-debug",
+        "COREFX_DEPLOY_NAME": "hello-mediatr-api"
+      },
+      "distributionName": "Ubuntu"
     }
   }
 }

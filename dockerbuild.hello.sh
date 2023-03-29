@@ -6,6 +6,7 @@
 # - HealthCheck 
 #   - Debug         http://localhost:5000/health
 
+
 #================================================================
 # About Dockerbuild
 #================================================================
@@ -19,6 +20,7 @@
 #   - docker.io: docker.io/[ACCOUNT-ID]
 #   - or AWS format: [ACCOUNT-ID].dkr.ecr.[REGION].amazonaws.com
 #   - or GCP format: gcr.io/[PROJECT-ID]
+
 
 #!/bin/bash
 #================================================================
@@ -37,10 +39,12 @@ IMAGE_HOST,VERSION,REPO_NAME,IMAGE_HOST_WITH_TAG\
   echo "$i = ${!i}"
 done
 
+
 #================================================================
 # docker commands
 #================================================================
 docker build . -t $IMAGE_HOST_WITH_TAG -f Dockerfile
+
 
 #================================================================
 # AWS Login                                    

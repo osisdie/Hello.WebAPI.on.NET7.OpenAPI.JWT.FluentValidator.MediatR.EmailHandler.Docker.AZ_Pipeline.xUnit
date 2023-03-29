@@ -148,8 +148,9 @@ namespace Hello.MediatR.Endpoint
                     return descriptions.First();
                 });
                 c.EnableAnnotations();
-                c.SwaggerDoc("v202104", new OpenApiInfo { Title = "Hello-MediatR-NET5 v202104", Version = "202104" });
-                c.SwaggerDoc("v202103", new OpenApiInfo { Title = "Hello-MedateR-NET5 v202103", Version = "202103" });
+                c.SwaggerDoc("v202303", new OpenApiInfo { Title = "Hello-MediatR-NET v202303", Version = "202303" });
+                c.SwaggerDoc("v202203", new OpenApiInfo { Title = "Hello-MediatR-NET v202203", Version = "202203" });
+                c.SwaggerDoc("v202103", new OpenApiInfo { Title = "Hello-MedateR-NET v202103", Version = "202103" });
 
                 c.DocumentFilter<RemoveDefaultApiVersionRouteDocumentFilter>();
 
@@ -187,8 +188,9 @@ namespace Hello.MediatR.Endpoint
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v202104/swagger.json", "Hello-MediatR-NET5 v202104");
-                    c.SwaggerEndpoint("/swagger/v202103/swagger.json", "Hello-MediatR-NET5 v202103");
+                    c.SwaggerEndpoint("/swagger/v202303/swagger.json", "Hello-MediatR-NET v202303");
+                    c.SwaggerEndpoint("/swagger/v202203/swagger.json", "Hello-MediatR-NET v202203");
+                    c.SwaggerEndpoint("/swagger/v202103/swagger.json", "Hello-MediatR-NET v202103");
                 });
             }
 

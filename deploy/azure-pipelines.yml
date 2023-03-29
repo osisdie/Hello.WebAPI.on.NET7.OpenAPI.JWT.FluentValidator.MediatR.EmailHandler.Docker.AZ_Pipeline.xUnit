@@ -76,7 +76,7 @@ steps:
     displayName: Install .NET SDK
     inputs:
       packageType: 'sdk'
-      version: '5.x'
+      version: '7.x'
       includePreviewVersions: true
 
   #- task: NuGetAuthenticate@0

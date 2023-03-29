@@ -1,5 +1,5 @@
 ## Prerequisite
-- [Download .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [Download .NET 7.0](https://dotnet.microsoft.com/download/dotnet/7.0)
   - And the latest Visual Studio / VS Code
 - [Setup minikube](https://minikube.sigs.k8s.io/docs/start/)
   - Skip if you have you own k8s environment
@@ -8,7 +8,7 @@
 
 ## Features
 - Use NET Standard 2.1 for library projects
-- Use NET 5 for Web Applications (compatible with .NET Core 3.1)
+- Use NET 7 for Web Applications
 - Use Built-In Microsoft ConfigurationBuilder to config (appsettings.json, hellosettings.json)
 - Use Secret Storage to protect sensitive configs
 - Use Middleware for logging Request/Response
@@ -56,8 +56,11 @@ Whenever any feature, bugfix or necessary to rebuild a new image, make sure you 
 - ChangeLog Format: Markdown with date and version number, such as
   ```markdown
   ### 2021-04-18
-  * ** Hello.MediatR.Domain.Contract (1.0.0)**
+  * **Hello.MediatR.Domain.Contract (1.0.0)**
     * Created
+  ### 2023-03-28
+  * **Hello.MediatR.Endpoint (2.0.0)**
+    * Upgrade to NET 7.0 from NET 5.0
   ```
 
 - Git Version Tags: `hello-mediatr-api/v1.0.0.0-100`
