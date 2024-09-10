@@ -18,7 +18,7 @@ namespace Hello.MediatR.Endpoint.Services.NotifyServices
 {
     public class SvcEvent_EmailHandler : INotificationHandler<SvcEvent_MetadataDto>
     {
-        protected readonly bool _enabled = false;
+        protected readonly bool _enabled = true;
         protected readonly ILogger _logger;
         protected readonly IConfiguration _config;
         protected readonly IEmailService _svcEmail;
@@ -36,14 +36,10 @@ namespace Hello.MediatR.Endpoint.Services.NotifyServices
         public async Task Handle(SvcEvent_MetadataDto eventDto, CancellationToken cancellationToken)
         {
             if (!_enabled || _svcEmail == null)
-            {
                 return;
-            }
 
             if (eventDto?.ResponseDto == null || eventDto.ResponseDto.IsSuccess == true)
-            {
                 return;
-            }
 
             try
             {

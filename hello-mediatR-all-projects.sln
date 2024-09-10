@@ -11,9 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		src\Endpoint\HelloMediatR\.version = src\Endpoint\HelloMediatR\.version
-		deploy\azure-pipelines.yml = deploy\azure-pipelines.yml
 		ChangeLog.md = ChangeLog.md
-		dockerbuild.hello.sh = dockerbuild.hello.sh
+		dockerbuild.sh = dockerbuild.sh
 		Dockerfile = Dockerfile
 		README.md = README.md
 	EndProjectSection
@@ -51,6 +50,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreFX.DataAccess.Mapper", "src\Library\CoreFX\DataAccess\Mapper\CoreFX.DataAccess.Mapper.csproj", "{451DF31E-43E4-4B2D-A578-C77223E192AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest.CoreFX", "tests\UnitTest\CoreFX\UnitTest.CoreFX.csproj", "{472A269E-5A4C-43CE-8843-4A93494B4B0B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{A137B480-95AC-4ABE-B413-B2CDD2E41973}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\azure-pipelines.yml = deploy\azure-pipelines.yml
+		minikube\deployment.yaml = minikube\deployment.yaml
+		minikube\ingress.yaml = minikube\ingress.yaml
+		minikube\minikube.sh = minikube\minikube.sh
+		minikube\service.yaml = minikube\service.yaml
+		deploy\test_smtp.py = deploy\test_smtp.py
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +140,7 @@ Global
 		{D47303E5-D112-4E18-8E89-A04DF11745A1} = {F3E939E2-854A-4137-B008-58CD647CF16C}
 		{451DF31E-43E4-4B2D-A578-C77223E192AB} = {1F2B88C7-A6DA-406A-9603-151CF93A66CE}
 		{472A269E-5A4C-43CE-8843-4A93494B4B0B} = {F3E939E2-854A-4137-B008-58CD647CF16C}
+		{A137B480-95AC-4ABE-B413-B2CDD2E41973} = {45405CE5-2DF8-44C5-82D8-5E2A1781B5C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47D5B15A-FCA7-49E9-98E2-7F8AAB701FF9}

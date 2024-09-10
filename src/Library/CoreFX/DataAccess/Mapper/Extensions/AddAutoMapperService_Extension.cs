@@ -69,7 +69,8 @@ namespace CoreFX.DataAccess.Mapper.Extensions
                     false == t.IsAbstract &&
                     false == t.IsInterface &&
                     true == t.IsPublic &&
-                    typeof(AutoMapper.Profile).IsAssignableFrom(t)
+                    typeof(AutoMapper.Profile).IsAssignableFrom(t) &&
+                    t.Namespace != nameof(AutoMapper)
                );
 
             services.AddSingleton<AutoMapper.IConfigurationProvider>(p =>

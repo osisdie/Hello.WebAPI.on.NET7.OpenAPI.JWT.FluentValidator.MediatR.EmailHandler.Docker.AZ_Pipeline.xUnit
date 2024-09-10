@@ -34,12 +34,12 @@ namespace CoreFX.Auth.Utils
         public static string GenTokenkey(JwtTokenDto model, int expireMins = 60)
         {
             if (model == null)
-            {
                 return null;
-            }
 
-            var secret = SdkRuntime.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Secret")
+            string secret = SdkRuntime.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Secret")
                 ?? throw new ArgumentNullException("secret");
+            string issuer = SdkRuntime.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Issuer");
+            string audience = SdkRuntime.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Audience");
 
             try
             {
@@ -58,8 +58,8 @@ namespace CoreFX.Auth.Utils
 
                 //Generate Token for user 
                 var JWToken = new JwtSecurityToken(
-                    issuer: "https://auth0.com",
-                    audience: "https://auth0.com",
+                    issuer: issuer,
+                    audience: audience,
                     claims: GetAdminClaims(model),
                     notBefore: DateTime.UtcNow,
                     expires: expireTime,
@@ -83,8 +83,10 @@ namespace CoreFX.Auth.Utils
                 return null;
             }
 
-            var secret = SvcContext.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Secret")
+            string secret = SvcContext.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Secret")
                 ?? throw new ArgumentNullException("secret");
+            string issuer = SvcContext.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Issuer");
+            string audience = SvcContext.Configuration?.GetValue<string>("AuthConfig:JwtConfig:Audience");
 
             try
             {
@@ -96,9 +98,9 @@ namespace CoreFX.Auth.Utils
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
-                    ValidIssuer = "https://auth0.com",
+                    ValidIssuer = issuer,
                     ValidateAudience = true,
-                    ValidAudience = "https://auth0.com",
+                    ValidAudience = audience,
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,

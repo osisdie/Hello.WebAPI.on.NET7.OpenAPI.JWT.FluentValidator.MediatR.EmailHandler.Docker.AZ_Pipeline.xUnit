@@ -49,7 +49,7 @@ namespace CoreFX.Auth.Services
                 jwtTokenDto.Token = accessToken;
                 jwtTokenDto.RefreshToken = newRefreshToken;
 
-                res.Success().SetData(jwtTokenDto);
+                res.SetData(jwtTokenDto).Success();
             }
             catch (Exception ex)
             {

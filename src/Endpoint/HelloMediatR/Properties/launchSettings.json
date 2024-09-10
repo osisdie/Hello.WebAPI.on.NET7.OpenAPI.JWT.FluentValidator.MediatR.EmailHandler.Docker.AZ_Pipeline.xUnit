@@ -4,35 +4,40 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:54652",
+      "applicationUrl": "http://+:54652",
       "sslPort": 0
     }
   },
   "profiles": {
     "http:5000": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "health",
       "applicationUrl": "http://+:5000",
       "environmentVariables": {
+        "ASPNETCORE_HTTP_PORTS": "5000",
+        "ASPNETCORE_HTTPS_PORTS": "5001",
+        "ASPNETCORE_URLS": "https://+:5001;http://+:5000",
         "ASPNETCORE_ENVIRONMENT": "Debug",
         //"ASPNETCORE_ENVIRONMENT": "Development",
         //"ASPNETCORE_ENVIRONMENT": "Staging",
         "COREFX_API_NAME": "hello-mediatr-api-debug",
-        "COREFX_DEPLOY_NAME": "hello-mediatr-api"
-        //"COREFX_SMTP_PWD": "***"
+        "COREFX_DEPLOY_NAME": "hello-mediatr-api-debug"
+        //"COREFX_SMTP_PWD": "gc*********lv"
       }
     },
     "WSL": {
-      "commandName": "WSL",
+      "commandName": "WSL2",
       "launchBrowser": true,
       "launchUrl": "https://+:5001",
       "environmentVariables": {
+        "ASPNETCORE_HTTP_PORTS": "5000",
+        "ASPNETCORE_HTTPS_PORTS": "5001",
         "ASPNETCORE_URLS": "https://+:5001;http://+:5000",
         "ASPNETCORE_ENVIRONMENT": "Debug",
         "COREFX_API_NAME": "hello-mediatr-api-debug",
-        "COREFX_DEPLOY_NAME": "hello-mediatr-api"
+        "COREFX_DEPLOY_NAME": "hello-mediatr-api-debug"
       },
       "distributionName": "Ubuntu"
     }

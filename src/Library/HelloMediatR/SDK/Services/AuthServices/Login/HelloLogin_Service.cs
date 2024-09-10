@@ -26,7 +26,7 @@ namespace Hello.MediatR.Domain.SDK.Services.AuthServices.Login
         public async Task<ISvcResponseBaseDto<HelloLogin_ResponseDto>> ExecuteAsync(HelloLogin_RequestDto requestDto)
         {
             var res = new SvcResponseDto<HelloLogin_ResponseDto>();
-            var user = await _context.GetUserByName(requestDto.UserName);
+            var user = await _context.ValidateUser(requestDto.UserName, requestDto.Password);
             if (user == null)
             {
                 res.Error(SvcCodeEnum.AccountLoginFailed, "Invalid account or password.");

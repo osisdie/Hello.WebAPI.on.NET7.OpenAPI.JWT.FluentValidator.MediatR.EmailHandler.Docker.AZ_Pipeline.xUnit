@@ -61,7 +61,7 @@ namespace Hello.MediatR.Endpoint.Controllers.AuthActions
                 _mediator?.Publish(new SvcEvent_MetadataDto
                 {
                     From = HttpContext.Request.GetDisplayUrl(),
-                    Category = "User login",
+                    Category = "user-login",
                     IsSuccess = svcRes.Any(),
                     User = requestDto.UserName,
                     RequestDto = requestDto,

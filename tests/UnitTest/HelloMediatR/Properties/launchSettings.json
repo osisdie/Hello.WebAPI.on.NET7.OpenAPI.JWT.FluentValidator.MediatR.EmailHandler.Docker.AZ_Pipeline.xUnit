@@ -3,12 +3,12 @@
   "profiles": {
     "UnitTest.HelloMediatR": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://+:5000",
       "environmentVariables": {
         //"ASPNETCORE_ENVIRONMENT": "Debug",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "COREFX_API_NAME": "hello-mediatr-api-dev",
-        "COREFX_DEPLOY_NAME": "hello-mediatr-api"
+        "COREFX_DEPLOY_NAME": "hello-mediatr-api-dev"
       }
     }
   }

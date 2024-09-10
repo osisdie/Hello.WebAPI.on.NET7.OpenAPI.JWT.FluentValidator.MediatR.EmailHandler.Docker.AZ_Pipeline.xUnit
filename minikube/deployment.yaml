@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-mediatr-api-dev
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: hello-mediatr-api-dev
+  template:
+    metadata:
+      labels:
+        app: hello-mediatr-api-dev
+    spec:
+      imagePullSecrets:
+      - name: regcred  # Add creds to specify the private docker registery if needed
+      containers:
+      - name: hello-mediatr-api
+        image: ${IMAGE_HOST}/hello-mediatr-api:2.0.1
+        ports:
+        - containerPort: 80 # 8080
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: COREFX_DEPLOY_NAME
+          value: hello-mediatr-api-dev
+        - name: COREFX_API_NAME
+          value: hello-mediatr-api-dev
+        - name: COREFX_SMTP_PWD
+          value: ${COREFX_SMTP_PWD}

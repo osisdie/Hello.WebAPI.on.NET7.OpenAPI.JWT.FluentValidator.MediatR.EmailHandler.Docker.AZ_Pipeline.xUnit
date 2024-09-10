@@ -24,13 +24,13 @@ namespace UnitTest.CoreFX.Tests
             var sw = new Stopwatch();
             var settings = new EmailConfiguration
             {
-                From = "admin@corefx.com",
-                To = "kevin.wu@corefx.com",
+                From = "admin@kevinw.net",
+                To = "admin+xunit@kevinw.net",
                 SmtpConfig = new SmtpCofiguration
                 {
-                    Host = "smtp.office365.com",
+                    Host = "smtp.gmail.com",
                     Port = 587,
-                    Username = "admin@corefx.com",
+                    Username = "admin@kevinw.net",
                 }
             };
 

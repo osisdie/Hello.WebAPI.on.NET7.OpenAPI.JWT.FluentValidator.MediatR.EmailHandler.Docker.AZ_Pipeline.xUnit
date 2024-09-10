@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-mediatr-api-dev-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /mediatr/?(.*)
+        backend:
+          serviceName: hello-mediatr-api-dev-svc
+          servicePort: 80

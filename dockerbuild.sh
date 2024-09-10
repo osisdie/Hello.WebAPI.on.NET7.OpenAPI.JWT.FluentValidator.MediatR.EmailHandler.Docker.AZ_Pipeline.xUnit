@@ -1,9 +1,9 @@
 #================================================================
 # About API
 #================================================================
-# - Document  
+# - Document
 #   - Debug         http://localhost:5000/swagger
-# - HealthCheck 
+# - HealthCheck
 #   - Debug         http://localhost:5000/health
 
 
@@ -13,7 +13,7 @@
 # export VERSION=$(cat src/Endpoint/HelloMediatR/.version | head -n1)
 #   Your docker image's version, ex:
 #   - default: the content in the file of ./src/Endpoint/HelloMediatR/.version
-#   - or any specific such as 1.0.0.1
+#   - or any specific such as 1.0.1
 
 # export IMAGE_HOST=docker.io/[ACCOUNT-ID]
 #   Your Container Registry, ex:
@@ -30,8 +30,9 @@ if [ -z ${IMAGE_HOST+x} ]; then echo "IMAGE_HOST is unset" && exit 1; else echo 
 if [ -z ${VERSION+x} ]; then echo "VERSION is unset" && exit 1; else echo "VERSION is set to '$VERSION'"; fi
 
 REPO_NAME=hello-mediatr-api
-VERSION=${VERSION:-1.0.0.0}
+VERSION=${VERSION:-2.0.1}
 IMAGE_HOST_WITH_TAG=${IMAGE_HOST}/${REPO_NAME}:${VERSION}
+BUILD_VER=$(echo "$RANDOM")
 
 for i in {\
 IMAGE_HOST,VERSION,REPO_NAME,IMAGE_HOST_WITH_TAG\
@@ -45,16 +46,36 @@ done
 #================================================================
 docker build . -t $IMAGE_HOST_WITH_TAG -f Dockerfile
 
-
 #================================================================
-# AWS Login                                    
-#================================================================  
+# AWS Login
+#================================================================
 # aws ecr get-login --no-include-email --region us-west-2
 # echo <your-password> | docker login ${IMAGE_HOST} -u AWS --password-stdin
 # export AWS_PROFILE="default"
 # echo $(aws ecr get-authorization-token --region us-west-2 --output text --query 'authorizationData[].authorizationToken' | base64 -d | cut -d: -f2) | docker login -u AWS $IMAGE_HOST --password-stdin
 
 #================================================================
-# push image to Container Registry                            
+# (or) Docker Hub Login
+#================================================================
+# docker login -u [username] -p [password]
+# password is suggested to use Access Token and even enable SSO, referring to https://docs.docker.com/go/access-tokens/
+# Password:
+# Login Succeeded
+
+#================================================================
+# push image to Container Registry
 #================================================================
 docker push $IMAGE_HOST_WITH_TAG
+
+# The push refers to repository [docker.io/****/hello-mediatr-api]
+# 24003397305c: Pushed
+# 80f29463b0d4: Pushed
+# 5f70bf18a086: Mounted from nodered/node-red
+# 0756635a14f3: Pushed
+# d9cbcb220d03: Pushed
+# 623621fea071: Pushed
+# eec44343af9f: Pushed
+# 5255a12b962a: Pushed
+# 787862deafcb: Pushed
+# 8e2ab394fabf: Pushed
+# 2.0.1: digest: sha256:e418687e0

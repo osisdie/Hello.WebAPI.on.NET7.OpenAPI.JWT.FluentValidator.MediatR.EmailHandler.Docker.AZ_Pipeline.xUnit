@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using CoreFX.Abstractions.App_Start;
 using CoreFX.Abstractions.Consts;
@@ -8,6 +9,7 @@ using CoreFX.Abstractions.Extensions;
 using CoreFX.Abstractions.Logging;
 using CoreFX.Auth.Interfaces;
 using CoreFX.Auth.Services;
+using CoreFX.DataAccess.Mapper.Extensions;
 using CoreFX.Hosting.Extensions;
 using CoreFX.Hosting.Middlewares;
 using CoreFX.Notification.Extensions;
@@ -17,7 +19,6 @@ using Hello.MediatR.Domain.Contract.AuthServices.RefreshToken;
 using Hello.MediatR.Domain.Contract.NotifiyServices;
 using Hello.MediatR.Domain.DataAccess.DbContexts;
 using Hello.MediatR.Domain.SDK.Services.AuthServices.Login;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,7 +53,9 @@ namespace Hello.MediatR.Endpoint
             services.AddHttpClient();
             services.AddHttpContextAccessor();
 
-            var secret = Configuration.GetValue<string>("AuthConfig:JwtConfig:Secret");
+            string secret = Configuration.GetValue<string>("AuthConfig:JwtConfig:Secret");
+            string issuer = Configuration.GetValue<string>("AuthConfig:JwtConfig:Issuer");
+            string audience = Configuration.GetValue<string>("AuthConfig:JwtConfig:Audience");
             if (!string.IsNullOrEmpty(secret))
             {
                 var secretKey = Encoding.ASCII.GetBytes(secret);
@@ -69,9 +72,9 @@ namespace Hello.MediatR.Endpoint
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(secretKey),
                         ValidateIssuer = true,
-                        ValidIssuer = "https://auth0.com",
+                        ValidIssuer = issuer,
                         ValidateAudience = true,
-                        ValidAudience = "https://auth0.com",
+                        ValidAudience = audience,
                         RequireExpirationTime = true,
                         ClockSkew = TimeSpan.Zero,
                         ValidateLifetime = true,
@@ -85,18 +88,24 @@ namespace Hello.MediatR.Endpoint
             }
 
             // CoreFX DI
-            services.AddMediatR(typeof(Program));
+            //services.AddMediatR(typeof(Program));
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+            });
             services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()));
             services.AddScoped<ApiContext>();
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.AllowNullCollections = true;
-                cfg.AllowNullDestinationValues = true;
-            }, assemblies: new []
-            {
-                typeof(HelloLogin_Mapper).Assembly,
-                typeof(Program).Assembly,
-            }.Distinct());
+            services.AddMappers<AutoMapper.IMapper>();
+            //services.AddAutoMapper(cfg =>
+            //{
+            //    cfg.AllowNullCollections = true;
+            //    cfg.AllowNullDestinationValues = true;
+            //}, assemblies: new[]
+            //{
+            //    typeof(HelloLogin_Mapper).Assembly,
+            //    typeof(Program).Assembly,
+            //}.Distinct());
+
             services.AddSingleton<ISessionAdmin, SessionAdmin>();
             services.AddEmailService(options =>
             {
@@ -126,7 +135,7 @@ namespace Hello.MediatR.Endpoint
             })
             .AddFluentValidation(opt =>
             {
-                opt.RegisterValidatorsFromAssemblies(new []
+                opt.RegisterValidatorsFromAssemblies(new[]
                 {
                     typeof(HelloLogin_RequestValidator).Assembly,
                     typeof(AuthRefreshToken_RequestValidator).Assembly,

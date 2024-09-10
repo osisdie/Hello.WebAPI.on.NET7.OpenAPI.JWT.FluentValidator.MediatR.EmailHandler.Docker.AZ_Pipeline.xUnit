@@ -37,7 +37,7 @@ variables:
   - name: AZ_GIT_USER_NAME
     value: ci
   - name: SVC_VERSION_FILE
-    value: src/Endpoint/HelloMediatR/.version    
+    value: src/Endpoint/HelloMediatR/.version
   - name: VAR_NUGET_FILE_PATH
     value: 'Nuget.Config'
   - name: VAR_SOLUTION
@@ -48,7 +48,7 @@ variables:
     value: 'Release'
   - name: VAR_TEST_PROJECTS
     value: 'hello-mediatR-all-projects.sln'
-  - name: VAR_DOCKER_REPO_NAME 
+  - name: VAR_DOCKER_REPO_NAME
     value: hello-mediatr-api
     readonly: true
   - name: VAR_DOCKERFILE_PATH
@@ -70,13 +70,13 @@ steps:
 
       if [ -n "$CURRENT_VERSION" ]; then echo "version is set to '$CURRENT_VERSION'"; else echo "version is unset" && exit 1; fi
       echo "##vso[task.setvariable variable=CURRENT_VERSION]$CURRENT_VERSION-${{ variables.VAR_BUILD_ID }}"
-    displayName: 'Versioning'   
+    displayName: 'Versioning'
 
   - task: UseDotNet@2
     displayName: Install .NET SDK
     inputs:
       packageType: 'sdk'
-      version: '7.x'
+      version: '8.x'
       includePreviewVersions: true
 
   #- task: NuGetAuthenticate@0
@@ -98,7 +98,7 @@ steps:
     inputs:
       command: build
       arguments: '-c ${{ variables.VAR_BUILD_CONFIGURATION }}'
-    
+
   - script: |
       sudo cp $(SVC_OPENSSL_FILE) /usr/lib/ssl/openssl.cnf
     displayName: 'Prepare testing environment'
@@ -108,6 +108,7 @@ steps:
     env:
       ASPNETCORE_ENVIRONMENT: Development
       COREFX_API_NAME: $(SVC_API_NAME)
+      COREFX_SMTP_PWD: $(COREFX_SMTP_PWD)
     inputs:
       command: test
       arguments: '-c ${{ variables.VAR_BUILD_CONFIGURATION }} ${{ variables.VAR_TEST_PROJECTS }}'
@@ -116,8 +117,8 @@ steps:
       echo "starting docker build..."
       echo "docker build -t ${{ variables.VAR_DOCKER_REPO_NAME }}:$(CURRENT_VERSION) -f $(System.DefaultWorkingDirectory)/${{ variables.VAR_DOCKERFILE_PATH }} ."
       docker build -t ${{ variables.VAR_DOCKER_REPO_NAME }}:$(CURRENT_VERSION) -f $(System.DefaultWorkingDirectory)/${{ variables.VAR_DOCKERFILE_PATH }} .        
-    displayName: 'Docker build' 
-  
+    displayName: 'Docker build'
+
   - task: ECRPushImage@1
     displayName:  Docker push
     condition: and(succeeded(), eq(variables['VAR_DOCKER_PUSH_ENABLED'], true))
@@ -133,7 +134,7 @@ steps:
   - script: |
       git config --global user.email $(AZ_GIT_USER_EMAIL)
       git config --global user.name $(AZ_GIT_USER_NAME)
-      git tag -a ${{ variables.VAR_DOCKER_REPO_NAME }}/v$(CURRENT_VERSION) -m 'ci: Pipeline git tagged [skip ci]' 
+      git tag -a ${{ variables.VAR_DOCKER_REPO_NAME }}/v$(CURRENT_VERSION) -m 'ci: Pipeline git tagged [skip ci]'
       git push --tags
     workingDirectory: $(Build.SourcesDirectory)
     condition: and(succeeded(), eq(variables['VAR_DOCKER_PUSH_ENABLED'], true))
